@@ -35,10 +35,10 @@ class RandomProxy(object):
         self.mode = settings.get('PROXY_MODE')
         self.proxy_list = settings.get('PROXY_LIST')
         self.chosen_proxy = ''
-        if self.proxy_list is None:
-            raise KeyError('PROXY_LIST setting is missing')
 
         if self.mode == Mode.RANDOMIZE_PROXY_EVERY_REQUESTS or self.mode == Mode.RANDOMIZE_PROXY_ONCE:
+            if self.proxy_list is None:
+                raise KeyError('PROXY_LIST setting is missing')
             fin = open(self.proxy_list)
             self.proxies = {}
             for line in fin.readlines():
