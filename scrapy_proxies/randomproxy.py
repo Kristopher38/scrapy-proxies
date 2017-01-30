@@ -34,6 +34,7 @@ class RandomProxy(object):
     def __init__(self, settings):
         self.mode = settings.get('PROXY_MODE')
         self.proxy_list = settings.get('PROXY_LIST')
+        self.keep_proxies = settings.get('KEEP_PROXIES')
         self.chosen_proxy = ''
         if self.proxy_list is None:
             raise KeyError('PROXY_LIST setting is missing')
@@ -102,6 +103,8 @@ class RandomProxy(object):
 
     def process_exception(self, request, exception, spider):
         if 'proxy' not in request.meta:
+            return
+        if self.keep_proxies:
             return
         if self.mode == Mode.RANDOMIZE_PROXY_EVERY_REQUESTS or self.mode == Mode.RANDOMIZE_PROXY_ONCE:
             proxy = request.meta['proxy']
