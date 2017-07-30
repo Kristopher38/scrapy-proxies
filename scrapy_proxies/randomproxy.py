@@ -43,7 +43,7 @@ class RandomProxy(object):
             fin = open(self.proxy_list)
             self.proxies = {}
             for line in fin.readlines():
-                parts = re.match('(\w+://)(\w+:\w+@)?(.+)', line.strip())
+                parts = re.match('(\w+:\/\/)(\w+:\w+@)?(.+)', line.strip())
                 if not parts:
                     continue
 
@@ -60,7 +60,7 @@ class RandomProxy(object):
         elif self.mode == Mode.SET_CUSTOM_PROXY:
             custom_proxy = settings.get('CUSTOM_PROXY')
             self.proxies = {}
-            parts = re.match('(\w+://)(\w+:\w+@)?(.+)', custom_proxy.strip())
+            parts = re.match('(\w+:\/\/)(\w+:\w+@)?(.+)', custom_proxy.strip())
             if not parts:
                 raise ValueError('CUSTOM_PROXY is not well formatted')
 
